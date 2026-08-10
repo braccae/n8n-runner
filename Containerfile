@@ -1,21 +1,10 @@
-FROM docker.io/n8nio/runners:next
-
+FROM docker.io/n8nio/runners:1.121.0
 USER root
+RUN cd /opt/runners/task-runner-javascript && CI=true pnpm install && pnpm add moment uuid @xivapi/nodestone
+RUN cd /opt/runners/task-runner-python && uv pip install numpy pandas polars beautifulsoup4 lxml pydantic selectolax python-dateutil
+COPY n8n-task-runners.json /etc/n8n-task-runners.json
 
-# WORKDIR /opt/runners/task-runner-javascript
-
-# RUN rm -f node_modules/.modules.yaml
-# RUN mv package.json package.json.bak
-# COPY package.json /app/task-runner-javascript/package.json
-# RUN pnpm install --prod --no-lockfile --silent
-# RUN mv package.json extras.json
-# RUN mv package.json.bak package.json
-
-WORKDIR /opt/runners/task-runner-python
-
-COPY extras.txt /app/task-runner-python/extras.txt
-RUN uv pip install -r /app/task-runner-python/extras.txt
-
-COPY --chown=root:root task-runners.json /etc/n8n-task-runners.json
+COPY enable_stdlib.py /tmp/enable_stdlib.py
+RUN  cd /etc && python3 /tmp/enable_stdlib.py
 
 USER runner

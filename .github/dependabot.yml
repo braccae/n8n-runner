@@ -1,0 +1,21 @@
+version: 2
+updates:
+  # Maintain GitHub Actions workflow action versions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+
+  # Maintain Containerfile base image dependencies
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    groups:
+      docker:
+        patterns:
+          - "*"
