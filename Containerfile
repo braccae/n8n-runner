@@ -1,4 +1,4 @@
-FROM docker.io/n8nio/runners:2.33.7
+FROM docker.io/n8nio/runners:2.35.3
 USER root
 RUN cd /opt/runners/task-runner-javascript && corepack prepare pnpm@10 --activate && pnpm add moment uuid @xivapi/nodestone
 RUN cd /opt/runners/task-runner-python && uv pip install numpy pandas polars beautifulsoup4 lxml pydantic selectolax python-dateutil
